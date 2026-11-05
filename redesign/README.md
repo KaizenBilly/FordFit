@@ -7,9 +7,10 @@ It is not part of the live Astro site and is not deployed.
 cd redesign && python3 -m http.server 8000   # http://localhost:8000
 ```
 
-- Palette: frost `#eef1f6`, navy `#0a1124`, electric blue `#2f6bff`, with a blue grade on photos and video
-- Type: Archivo (wide, for headlines) and Inter (body), from Google Fonts
+- Direction: a private coaching practice for a very wealthy client. Consultation-led, no prices on the page.
+- Palette: night `#0a0f1c`, mist `#e6e9ef`, platinum text, one steel-blue accent `#8ea6cb`; photos and video graded blue-black
+- Type: Bodoni Moda (display, with italic accents) and Jost (body), from Google Fonts
 - Hero: Toby's brand film (`public/assets/video/hero.mp4` from 8.4s, after the letterboxed opening),
   autoplaying muted on a loop. `assets/hero.webm` is tried first, `assets/hero.mp4` is the fallback.
-- Photos are Toby's own, given the same blue grade; full colour returns on hover.
-- Reviews are real Google reviews from `src/data/reviews.js`.
+- Photos are Toby's own. Group-class photos are left out to keep the one-to-one feel.
+- Reviews are real Google reviews from `src/data/reviews.js`, shortened with … and shown with first name and initial.

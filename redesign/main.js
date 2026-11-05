@@ -1,4 +1,4 @@
-// FordFit redesign preview: autoplaying hero video, sticky nav, reveals, counters.
+// FordFit redesign preview: autoplaying hero video, sticky nav, reveals, rotating client quotes.
 (() => {
   const root = document.documentElement;
   root.classList.add('js');
@@ -16,15 +16,23 @@
   const navIo = new IntersectionObserver(([e]) => nav.classList.toggle('is-on', !e.isIntersecting), { rootMargin: '-80px 0px 0px 0px' });
   navIo.observe(hero);
 
-  // ---------- Community strip: second copy for a seamless loop ----------
-  const track = document.querySelector('.community-track');
-  if (track && !reduced) {
-    [...track.children].forEach((img) => {
-      const c = img.cloneNode(true);
-      c.alt = '';
-      c.setAttribute('aria-hidden', 'true');
-      track.append(c);
-    });
+  // ---------- Client quotes: one at a time, advancing every 8 seconds ----------
+  const stage = document.querySelector('[data-quotes]');
+  if (stage) {
+    const quotes = [...stage.children];
+    const count = document.querySelector('.quote-count');
+    let at = 0, timer;
+    const show = (i) => {
+      at = (i + quotes.length) % quotes.length;
+      quotes.forEach((q, n) => q.classList.toggle('is-on', n === at));
+      count.textContent = `${at + 1} / ${quotes.length}`;
+    };
+    const auto = () => { clearInterval(timer); if (!reduced) timer = setInterval(() => show(at + 1), 8000); };
+    document.querySelector('[data-prev]').addEventListener('click', () => { show(at - 1); auto(); });
+    document.querySelector('[data-next]').addEventListener('click', () => { show(at + 1); auto(); });
+    stage.addEventListener('mouseenter', () => clearInterval(timer));
+    stage.addEventListener('mouseleave', auto);
+    auto();
   }
 
   // ---------- Reveals ----------
@@ -39,25 +47,6 @@
     }
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-  // ---------- Counters ----------
-  const fmt = (n, d) => n.toLocaleString('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d });
-  const cio = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (!e.isIntersecting) continue;
-      cio.unobserve(e.target);
-      const el = e.target, end = +el.dataset.count, d = +(el.dataset.decimals || 0);
-      if (reduced) { el.textContent = fmt(end, d); continue; }
-      const t0 = performance.now();
-      const step = (t) => {
-        const k = Math.min(1, (t - t0) / 1600);
-        el.textContent = fmt(end * (1 - Math.pow(1 - k, 3)), d);
-        if (k < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
-    }
-  }, { threshold: 0.6 });
-  document.querySelectorAll('[data-count]').forEach((el) => cio.observe(el));
 
   // ---------- App video: play only while on screen ----------
   const vio = new IntersectionObserver((entries) => {
