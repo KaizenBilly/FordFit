@@ -20,12 +20,6 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Preloader: shown until the first fifth of the hero frames are in -->
-  <div class="preloader" aria-hidden="true">
-    <img src="assets/fordfit-icon-600.png" alt="" width="88" height="88" />
-    <div class="preloader-bar"><span></span></div>
-  </div>
-
   <!-- Sticky nav: appears once the hero has scrolled past -->
   <header class="nav" data-nav>
     <div class="wrap nav-row">
@@ -39,7 +33,7 @@
         <a href="#app">The app</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a class="btn btn-ember btn-sm" href="/start-your-journey-page">Start your journey</a>
+      <a class="btn btn-accent btn-sm" href="/start-your-journey-page">Start your journey</a>
     </div>
   </header>
 
@@ -47,7 +41,10 @@
     <!-- 1. HOOK: scroll-scrubbed hero -->
     <section class="hero" id="top" data-hero>
       <div class="hero-stage">
-        <canvas class="hero-canvas" aria-hidden="true"></canvas>
+        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/img/hero-poster.jpg" aria-hidden="true">
+          <source src="assets/hero.webm" type="video/webm" />
+          <source src="assets/hero.mp4" type="video/mp4" />
+        </video>
         <div class="hero-shade" aria-hidden="true"></div>
 
         <div class="hero-top wrap">
@@ -56,24 +53,13 @@
         </div>
 
         <div class="hero-copy wrap">
-          <div class="hero-line" data-from="0" data-to=".3">
-            <p class="kicker">Toby Forder &middot; Norfolk</p>
-            <h1 class="display">Make a<br />difference.</h1>
+          <p class="kicker">Toby Forder &middot; Norfolk</p>
+          <h1 class="display">Make a<br />difference.</h1>
+          <p class="hero-sub">One coach. Four ways to train.<br />Long Stratton &middot; Wymondham &middot; At home &middot; Online</p>
+          <div class="hero-actions">
+            <a class="btn btn-accent" href="/start-your-journey-page">Start your journey <span aria-hidden="true">&rarr;</span></a>
+            <span class="hero-rating">&#9733; 5.0 &middot; 99 Google reviews</span>
           </div>
-          <div class="hero-line" data-from=".36" data-to=".64">
-            <p class="display display-md">One coach.<br />Four ways to train.</p>
-            <p class="hero-sub">Long Stratton &middot; Wymondham &middot; At home &middot; Online</p>
-          </div>
-          <div class="hero-line hero-line-last" data-from=".72" data-to="1.01">
-            <p class="display display-md">It starts with<br />one message.</p>
-            <a class="btn btn-ember" href="/start-your-journey-page">Start your journey <span aria-hidden="true">&rarr;</span></a>
-          </div>
-        </div>
-
-        <div class="hero-foot wrap" aria-hidden="true">
-          <span class="hero-scroll">Scroll</span>
-          <span class="hero-progress"><span></span></span>
-          <span class="hero-rating">&#9733; 5.0 &middot; 99 Google reviews</span>
         </div>
       </div>
     </section>
@@ -288,7 +274,7 @@
         <h2 class="display display-lg reveal">Ready when<br />you are.</h2>
         <p class="lead reveal">Tell Toby what you want to change. He’ll get back to you to book your consultation.</p>
         <div class="ask-actions reveal">
-          <a class="btn btn-ember btn-lg" href="/start-your-journey-page">Start your journey <span aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-accent btn-lg" href="/start-your-journey-page">Start your journey <span aria-hidden="true">&rarr;</span></a>
           <a class="link-arrow" href="tel:+447495141804">or call 07495 141804</a>
         </div>
       </div>
