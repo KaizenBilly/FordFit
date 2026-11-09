@@ -6,10 +6,10 @@ import { REVIEWS, REVIEW_COUNT } from './reviews.js';
 import { SITE, SOCIALS } from '../site.js';
 
 const SERVICES = {
-  home: { name: 'FordFit Personal Training', description: 'Personal training in Long Stratton and Wymondham, at home with a mobile gym, or online through the FordFit app.', low: 20, high: 320, offers: 7 },
-  inPerson: { name: 'FordFit In-Person Personal Training', description: '1-to-1 personal training at Long Stratton Leisure Centre and NR Fitness in Wymondham: £45 pay as you go, or monthly packages from £160.', low: 45, high: 320, offers: 4 },
-  longStratton: { name: 'FordFit Personal Training – Long Stratton', description: '1-to-1 personal training at Long Stratton Leisure Centre: £45 pay as you go, or monthly packages from £160.', low: 45, high: 320, offers: 4 },
-  wymondham: { name: 'FordFit Personal Training – Wymondham', description: '1-to-1 personal training at NR Fitness in Wymondham: £45 pay as you go, or monthly packages from £160.', low: 45, high: 320, offers: 4 },
+  home: { name: 'FordFit Personal Training', description: 'Personal training in Long Stratton and Wymondham, at home with a mobile gym, or online through the FordFit app.', low: 20, high: 280, offers: 6 },
+  inPerson: { name: 'FordFit In-Person Personal Training', description: '1-to-1 personal training at Long Stratton Leisure Centre and NR Fitness in Wymondham: £45 pay as you go, or monthly packages from £160.', low: 45, high: 280, offers: 3 },
+  longStratton: { name: 'FordFit Personal Training – Long Stratton', description: '1-to-1 personal training at Long Stratton Leisure Centre: £45 pay as you go, or monthly packages from £160.', low: 45, high: 280, offers: 3 },
+  wymondham: { name: 'FordFit Personal Training – Wymondham', description: '1-to-1 personal training at NR Fitness in Wymondham: £45 pay as you go, or monthly packages from £160.', low: 45, high: 280, offers: 3 },
   homeMobile: { name: 'FordFit Home & Mobile Personal Training', description: 'Personal training at your home with a fully equipped mobile gym, from £50 a session.', low: 50, offers: 1 },
   online: { name: 'FordFit Online Coaching', description: 'Online coaching through the FordFit app: Basic £20 a month with no set-up fee, Elite £120 a month.', low: 20, high: 120, offers: 2 },
 };

@@ -1,6 +1,6 @@
 ---
-// Bronze / Silver / Gold monthly packages (GHL pricing table). On phones the cards become a
-// swipeable row with a fourth card, the single session, as the GHL mobile version had.
+// Bronze / Silver monthly packages plus the pay-as-you-go single session. On phones the cards
+// become a swipeable row. (Gold, 12 sessions a month, was dropped in Nov 2026.)
 import { START_URL } from '../site.js';
 const { accent, ribbonText = '#000', intro } = Astro.props;
 
@@ -8,8 +8,7 @@ const common = ['Ongoing performance feedback', 'Tailored monthly plan updates',
 const tiers = [
   { name: 'Bronze Package', caption: 'Steady, consistent progress with ongoing accountability.', features: ['4× sessions per month', ...common], price: '£160', per: '/ month', cta: 'Select Bronze Package' },
   { name: 'Silver Package', caption: 'Build momentum and results with consistent support.', features: ['8× sessions per month', ...common], price: '£280', per: '/ month', cta: 'Choose Silver', popular: true },
-  { name: 'Gold Package', caption: 'Maximum results with full accountability and expert guidance.', features: ['12× sessions per month', ...common], price: '£320', per: '/ month', cta: 'Go Gold' },
-  { name: 'Single PT Session', caption: 'Perfect for trying out FordFit or topping up your training.', features: ['1× 60-minute session', 'Expert technique advice', 'Intro session assessment'], price: '£45', per: '/ hour', cta: 'Book A Session', mobileOnly: true },
+  { name: 'Single PT Session', caption: 'Perfect for trying out FordFit or topping up your training.', features: ['1× 60-minute session', 'Expert technique advice', 'Intro session assessment'], price: '£45', per: '/ hour', cta: 'Book A Session' },
 ];
 ---
 <section class="tiers-section" style={`--accent:${accent};--ribbon-text:${ribbonText}`}>
@@ -21,7 +20,7 @@ const tiers = [
     <p class="tiers-intro">{intro}</p>
     <div class="tiers" data-tiers>
       {tiers.map((t) => (
-        <article class:list={['tier', { 'tier-mobile': t.mobileOnly }]}>
+        <article class="tier">
           {t.popular && <span class="ribbon">Most Popular</span>}
           <h3>{t.name}</h3>
           <p class="tier-caption">{t.caption}</p>
@@ -49,7 +48,6 @@ const tiers = [
     position: relative; overflow: hidden; background: var(--white); border: 1px solid #e4e4e4; border-radius: 16px;
     padding: 20px; text-align: center; display: flex; flex-direction: column; font-family: var(--poppins);
   }
-  .tier-mobile { display: none; }
   .tier h3 { font-size: 24px; font-weight: 700; line-height: 1.3; color: #111827; }
   .tier-caption { font-size: 14px; line-height: 1.4; color: #6b7280; margin: 8px auto 0; max-width: 260px; min-height: 40px; }
   .tier ul { margin: 18px 0 0; flex: 1; }
@@ -73,7 +71,6 @@ const tiers = [
     .tiers { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; margin-top: 30px; scrollbar-width: none; padding-bottom: 6px; }
     .tiers::-webkit-scrollbar { display: none; }
     .tier { flex: 0 0 min(320px, 86%); scroll-snap-align: center; }
-    .tier-mobile { display: flex; }
     .tier-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
     .tier-dots span { width: 8px; height: 8px; border-radius: 999px; background: rgba(0, 0, 0, .25); }
     .tier-dots span[aria-current] { background: rgba(0, 0, 0, .75); }
