@@ -1,16 +1,36 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-500.css';
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/poppins/latin-700.css';
+import '@fontsource/open-sans/latin-300.css';
+import '@fontsource/open-sans/latin-400.css';
+import '@fontsource/open-sans/latin-500.css';
+import '@fontsource/open-sans/latin-700.css';
+import '@fontsource/inter/latin-300.css';
+import '@fontsource/inter/latin-400.css';
 import '../styles/global.css';
 
-import { productSchema } from '../data/schema.js';
+import { productSchema, businessSchema, breadcrumbSchema } from '../data/schema.js';
 
-// `service` picks the page's Product schema in src/data/schema.js (review stars in Google results).
-const { title, description, service = 'home', schema = true } = Astro.props;
+// `service` picks the page's Product schema in src/data/schema.js (review stars in Google results);
+// `schema={false}` drops it (404, legal pages). `breadcrumbs` is [{ name, href }] after Home, the
+// last one being this page; it draws the visible trail and the matching BreadcrumbList.
+const { title, description, service = 'home', schema = true, noindex = false, breadcrumbs = null } = Astro.props;
 // build.format 'file' makes Astro.url end in .html, but the server 301s /page.html to /page,
 // so strip it: a canonical must be the address that actually returns 200.
 const cleanPath = Astro.url.pathname.replace(/\.html$/, '').replace(/^\/index$/, '/');
 const canonical = new URL(cleanPath, Astro.site);
+const isHome = cleanPath === '/';
+const crumbs = breadcrumbs ? [{ name: 'Home', href: '/' }, ...breadcrumbs] : null;
+const graph = [
+  ...(isHome ? businessSchema(Astro.site) : []),
+  ...(schema ? [productSchema(service, canonical)] : []),
+  ...(crumbs ? [breadcrumbSchema(crumbs, Astro.site)] : []),
+].map(({ '@context': _, ...node }) => node);
+const ogImage = new URL('/assets/img/og-default.jpg', Astro.site);
 ---
 <!doctype html>
 <html lang="en-GB">
@@ -20,22 +40,37 @@ const canonical = new URL(cleanPath, Astro.site);
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FordFit Personal Training" />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/assets/img/fordfit-icon.png', Astro.site)} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Open+Sans:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" />
-    {schema && <script type="application/ld+json" set:html={JSON.stringify(productSchema(service, canonical))} />}
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    {graph.length > 0 && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />}
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <Header />
-    <main>
+    <main id="main" tabindex="-1">
+      {crumbs && (
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol class="container">
+            {crumbs.map((c, i) => (
+              <li>{i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.href}>{c.name}</a>}</li>
+            ))}
+          </ol>
+        </nav>
+      )}
       <slot />
     </main>
     <Footer />

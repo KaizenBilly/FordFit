@@ -37,7 +37,7 @@ const services = [
       </div>
       <div class="lead-field">
         <label for={`${id}-email`}>Email<span aria-hidden="true"> *</span></label>
-        <input id={`${id}-email`} name="email" type="email" placeholder="you@example.com" autocomplete="email" maxlength="200" required />
+        <input id={`${id}-email`} name="email" type="email" placeholder="you@email.co.uk" autocomplete="email" maxlength="200" required />
       </div>
     </div>
 
@@ -59,7 +59,7 @@ const services = [
     {!isTrial && (
       <div class="lead-field">
         <label for={`${id}-message`}>Anything Toby should know?<span class="lead-opt"> (optional)</span></label>
-        <textarea id={`${id}-message`} name="message" rows="3" maxlength="2000" placeholder="Your goals, injuries, the best times to reach you…"></textarea>
+        <textarea id={`${id}-message`} name="message" rows="3" maxlength="2000" placeholder="Your goals and the best times to reach you…"></textarea>
       </div>
     )}
 
@@ -68,7 +68,7 @@ const services = [
       <span data-label>{isTrial ? 'Start my free trial' : 'Send to Toby'}</span>
       <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
     </button>
-    <p class="lead-note">Toby will only use your details to get in touch about your enquiry.</p>
+    <p class="lead-note">Toby will only use your details to get in touch about your enquiry. See our <a href="/privacy-policy">privacy policy</a>.</p>
   </form>
 
   <div class="lead-thanks" tabindex="-1" hidden>
@@ -91,7 +91,7 @@ const services = [
   .lead-field label, .lead-field legend {
     display: block; font-family: var(--poppins); font-size: 13px; font-weight: 500; margin-bottom: 7px; padding: 0;
   }
-  .lead-opt { color: #8a8fa8; font-weight: 400; }
+  .lead-opt { color: var(--slate); font-weight: 400; }
   .lead-field input[type='text'], .lead-field input[type='tel'], .lead-field input[type='email'], .lead-field textarea {
     width: 100%; font: inherit; font-size: 15px; color: var(--black); background: #fafafa;
     border: 1.5px solid #dcdcdc; border-radius: 10px; padding: 12px 14px; min-height: 48px;
@@ -138,7 +138,7 @@ const services = [
   .lead-submit:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, .18); transform: translateY(-1px); }
   .lead-submit:hover svg { transform: translateX(3px); }
   .lead-submit[disabled] { opacity: .6; cursor: progress; transform: none; box-shadow: none; }
-  .lead-note { font-size: 12px; color: #8a8fa8; text-align: center; margin-top: 12px; }
+  .lead-note { font-size: 12px; color: var(--slate); text-align: center; margin-top: 12px; }
   .lead-thanks { text-align: center; padding: 36px 10px 30px; }
   .lead-thanks:focus { outline: none; }
   .lead-check {

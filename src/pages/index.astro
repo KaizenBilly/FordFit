@@ -74,7 +74,7 @@ const faqs = [
     </video>
     <div class="container smarter">
       <div class="smarter-rotator">
-        <div class="ks-rotator" aria-label="Train smarter. Feel stronger. Live better.">
+        <div class="ks-rotator" role="img" aria-label="Train smarter. Feel stronger. Live better.">
           <div class="ks-viewport" aria-hidden="true">
             <div class="ks-track">
               <div>TRAIN SMARTER.</div>
@@ -107,7 +107,7 @@ const faqs = [
                 <li><Icon name="check-circle" size={14} /><span>{pre}<Fragment set:html={rest} /></span></li>
               ))}
             </ul>
-            <a class="btn btn-black btn-block" href={o.href}>{o.cta}</a>
+            <a class="btn btn-black btn-block" href={o.href}>{o.cta}<span class="sr-only">: {o.label}</span></a>
             <p class="offer-note">{o.note}</p>
           </article>
         ))}

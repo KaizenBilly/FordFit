@@ -8,6 +8,9 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@fontsource/inter": "5.2.8",
+    "@fontsource/open-sans": "5.2.7",
+    "@fontsource/poppins": "5.2.7",
     "astro": "5.18.1"
   }
 }

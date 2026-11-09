@@ -10,7 +10,7 @@ const clients = [
   { img: '/assets/img/client-jeremy.webp', alt: 'Personal training session in a home garage gym', name: 'Jeremy', text: 'prefers training in his own garage – with Toby’s mobile kit and equipment he gets a proper gym-quality session without ever leaving home.' },
 ];
 ---
-<Base service="homeMobile"
+<Base breadcrumbs={[{ name: 'In-Person Coaching', href: '/in-person-coaching' }, { name: 'Home & Mobile', href: '/personal-training-home-and-mobile' }]} service="homeMobile"
   title="Home & Mobile Personal Training | FordFit At-Home Coaching"
   description="Train at home with Mobile Personal Training. Toby brings the equipment to you for tailored 1-to-1 sessions designed to build strength and consistency."
 >
@@ -28,7 +28,7 @@ const clients = [
     <div class="container">
       <h2 class="why-title">WHY CLIENTS CHOOSE HOME AND MOBILE PT</h2>
       <p class="why-sub">Train in a way that works for your life — with personalised support right where you feel most comfortable.</p>
-      <div class="pt-track" data-pt>
+      <div class="pt-track" data-pt tabindex="0" role="region" aria-label="Home and mobile training client stories">
         {clients.map((c, i) => (
           <div class="pt-item">
             <div class:list={['pt-card', { active: i === 0 }]}><img src={c.img} alt={c.alt} width="840" height="1050" loading="lazy" /></div>

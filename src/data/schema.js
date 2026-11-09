@@ -3,7 +3,7 @@
 // does for a Product with prices, so each page describes its own service as a Product with the
 // Google rating and a few of the reviews shown on the page. Keep prices in step with the pages.
 import { REVIEWS, REVIEW_COUNT } from './reviews.js';
-import { SITE } from '../site.js';
+import { SITE, SOCIALS } from '../site.js';
 
 const SERVICES = {
   home: { name: 'FordFit Personal Training', description: 'Personal training in Long Stratton and Wymondham, at home with a mobile gym, or online through the FordFit app.', low: 20, high: 320, offers: 7 },
@@ -13,6 +13,46 @@ const SERVICES = {
   homeMobile: { name: 'FordFit Home & Mobile Personal Training', description: 'Personal training at your home with a fully equipped mobile gym, from £50 a session.', low: 50, offers: 1 },
   online: { name: 'FordFit Online Coaching', description: 'Online coaching through the FordFit app: Basic £20 a month with no set-up fee, Elite £120 a month.', low: 20, high: 120, offers: 2 },
 };
+
+// Home page only: who the business is. No review markup here (Google treats a business rating
+// itself as self-serving). No street address: Toby trains clients at the two gyms, at home and
+// online, so the business is described by the areas it serves.
+export function businessSchema(site) {
+  const id = new URL('/#business', site).href;
+  return [
+    {
+      '@type': ['ProfessionalService', 'LocalBusiness'],
+      '@id': id,
+      name: SITE.name,
+      legalName: 'Fordfit Personal Training Ltd',
+      url: new URL('/', site).href,
+      logo: new URL('/assets/img/fordfit-icon-600.png', site).href,
+      image: new URL('/assets/img/og-default.jpg', site).href,
+      description: SERVICES.home.description,
+      telephone: '+447495141804',
+      email: SITE.email,
+      priceRange: '££',
+      areaServed: ['Long Stratton', 'Wymondham', 'Norwich', 'Norfolk'].map((name) => ({ '@type': 'Place', name })),
+      founder: { '@type': 'Person', name: 'Toby Forder', jobTitle: 'Founder and Personal Trainer' },
+      sameAs: SOCIALS.map((s) => s.href),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': new URL('/#website', site).href,
+      url: new URL('/', site).href,
+      name: SITE.name,
+      publisher: { '@id': id },
+      inLanguage: 'en-GB',
+    },
+  ];
+}
+
+export function breadcrumbSchema(crumbs, site) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.href, site).href })),
+  };
+}
 
 export function productSchema(key, url) {
   const s = SERVICES[key] ?? SERVICES.home;

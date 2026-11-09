@@ -2,37 +2,105 @@
 import Icon from './Icon.astro';
 import { SITE, SERVICES, SOCIALS, START_URL } from '../site.js';
 const explore = [
-  { label: 'About Me', href: '/about-me' },
+  { label: 'About Toby', href: '/about-me' },
   { label: 'Online Coaching', href: '/online-coaching' },
   ...SERVICES.filter((s) => s.href !== '/online-coaching').map((s) => ({ label: s.footer, href: s.href })),
 ];
+const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
   <div class="container footer-grid">
-    <div>
-      <h2 class="footer-h">EXPLORE</h2>
+    <div class="footer-col">
+      <h2 class="footer-h">Explore</h2>
       <ul class="footer-links">
         {explore.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
     </div>
-    <div class="footer-follow">
-      <h2 class="footer-h">FOLLOW ME</h2>
+    <div class="footer-col">
+      <h2 class="footer-h">Contact</h2>
+      <ul class="footer-links">
+        <li><a class="footer-contact" href={SITE.phoneHref}><Icon name="phone-square" size={16} />{SITE.phone}</a></li>
+        <li><a class="footer-contact" href={`mailto:${SITE.email}`}><Icon name="envelope" size={16} />{SITE.email}</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-h">Follow Toby</h2>
       <ul class="socials">
         {SOCIALS.map((s) => (
-          <li><a href={s.href} target="_blank" rel="noopener" aria-label={s.name}><Icon name={s.icon} size={20} /></a></li>
+          <li><a href={s.href} target="_blank" rel="noopener" aria-label={`FordFit on ${s.name} (opens in a new tab)`}><Icon name={s.icon} size={20} /></a></li>
         ))}
       </ul>
     </div>
-    <div>
-      <h2 class="footer-h">CONTACT</h2>
-      <p class="footer-contact"><Icon name="phone-square" size={14} /><a href={SITE.phoneHref}>{SITE.phone}</a></p>
-      <p class="footer-contact"><Icon name="envelope" size={14} /><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-    </div>
-    <div>
-      <h2 class="footer-h footer-h-sm">START TODAY</h2>
-      <p class="footer-tag">MAKE A DIFFERENCE.</p>
-      <a class="btn btn-footer" href={START_URL}>CLICK HERE</a>
+    <div class="footer-col">
+      <h2 class="footer-h">Start today</h2>
+      <p class="footer-tag">MAKE. A. DIFFERENCE.</p>
+      <a class="footer-btn" href={START_URL}>Start your journey</a>
     </div>
   </div>
-  <p class="footer-credit">SITE BUILT &amp; MAINTAINED BY KAIZEN SOLUTIONS. ALL RIGHTS RESERVED.</p>
+
+  <img class="footer-wordmark" src="/assets/img/footer-wordmark.webp" alt="" width="2100" height="600" loading="lazy" />
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-row">
+      <p class="footer-legal">
+        © {year} Fordfit Personal Training Ltd. Registered in England and Wales, company no. 16600168.
+        Registered office: Sunnyside The Common, Fritton, Norwich NR15 2QS.
+      </p>
+      <ul class="footer-meta">
+        <li><a href="/privacy-policy">Privacy policy</a></li>
+        <li>Site by Kaizen Solutions</li>
+      </ul>
+    </div>
+  </div>
 </footer>
+
+<style>
+  .site-footer { background: var(--black); color: var(--white); padding-top: 56px; overflow: hidden; }
+  .footer-grid { display: grid; grid-template-columns: 1.2fr 1.3fr 1fr 1fr; gap: 32px; }
+  .footer-h {
+    font-family: var(--poppins); font-size: 20px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .footer-links { display: grid; gap: 4px; }
+  .footer-links a {
+    font-family: var(--poppins); font-size: 15px; line-height: 1.6; color: #d4d4d4; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px; padding: 3px 0; overflow-wrap: anywhere;
+  }
+  .footer-links a:hover { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
+  .footer-contact :global(svg) { flex: none; color: #9a9a9a; }
+
+  .socials { display: flex; flex-wrap: wrap; gap: 10px; }
+  .socials a {
+    width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+    background: #1c1c1c; color: #e6e6e6; border: 1px solid #333; transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .socials a:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+  .socials a:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+
+  .footer-tag { font-family: var(--open-sans); font-size: 14px; letter-spacing: 3px; color: #d4d4d4; margin-bottom: 16px; }
+  .footer-btn {
+    display: inline-block; background: var(--white); color: var(--black); font-family: var(--poppins); font-weight: 600;
+    font-size: 15px; letter-spacing: .5px; text-transform: uppercase; text-decoration: none; padding: 13px 22px; border-radius: 6px;
+    transition: opacity .15s ease;
+  }
+  .footer-btn:hover { opacity: .85; }
+  .footer-btn:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+
+  .footer-wordmark { width: min(1170px, 100%); height: auto; margin: 48px auto 0; opacity: .9; }
+
+  .footer-bottom { border-top: 1px solid #262626; padding: 18px 0 22px; }
+  .footer-bottom-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px 32px; flex-wrap: wrap; }
+  .footer-legal { font-family: var(--open-sans); font-size: 12.5px; line-height: 1.6; color: #a3a3a3; max-width: 720px; }
+  .footer-meta { display: flex; gap: 20px; font-family: var(--open-sans); font-size: 12.5px; line-height: 1.6; color: #a3a3a3; }
+  .footer-meta a { color: #d4d4d4; }
+  .footer-meta a:hover { color: var(--white); }
+
+  @media (max-width: 900px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+  }
+  @media (max-width: 480px) {
+    .site-footer { padding-top: 44px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-wordmark { margin-top: 36px; }
+  }
+</style>

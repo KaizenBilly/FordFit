@@ -32,22 +32,27 @@ const {
 
 <style>
   .app-section { background: var(--smoke); padding: 50px 0; }
-  .app { display: grid; grid-template-columns: minmax(0, 640px) 1fr; gap: 20px; align-items: center; }
-  .app-kicker { font-size: 13px; font-weight: 300; line-height: 26px; letter-spacing: 3px; text-transform: uppercase; color: #8893a8; }
+  .app { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 30px; align-items: center; }
+  .app-kicker { font-size: 13px; font-weight: 300; line-height: 26px; letter-spacing: 3px; text-transform: uppercase; color: #5d6478; }
   .app-title { font-size: var(--size); font-weight: 700; line-height: 1.1; letter-spacing: -1px; margin: 10px 0 20px; display: flex; flex-direction: column; text-wrap: balance; }
-  .app-text { font-size: 18px; font-weight: 300; line-height: 1.5; color: #8893a8; max-width: 626px; }
+  .app-text { font-size: 18px; font-weight: 300; line-height: 1.5; color: #5d6478; max-width: 626px; }
   .poppins { font-family: var(--poppins); }
   .open-sans { font-family: var(--open-sans); }
   .inter { font-family: 'Inter', var(--open-sans); }
   .app-text.inter { font-size: 20px; }
   .btn-app { margin-top: 20px; font-size: 16px; font-weight: 700; letter-spacing: 2px; padding: 20px 36px; border-radius: 4px; }
-  .app-media { height: 500px; }
+  /* The phones sit in the middle 738x548 (x 270-1008) of the 1280x720 video. A 4:3 box with
+     "cover" only trims the empty edges (4:3 shows x 160-1120), so the phones are never cut off. */
+  .app-media { width: 100%; aspect-ratio: 4 / 3; }
   .app-media video { width: 100%; height: 100%; object-fit: cover; }
+  /* Below this the side column gets too narrow for the phones: stack the video under the text */
+  @media (max-width: 1100px) {
+    .app { grid-template-columns: 1fr; }
+    .app-media { max-width: 640px; margin: 0 auto; }
+  }
   @media (max-width: 767px) {
     .app-section { padding: 40px 0; }
-    .app { grid-template-columns: 1fr; }
     .app-title { font-size: min(var(--size), 44px); }
     .app-text, .app-text.inter { font-size: 17px; }
-    .app-media { height: 360px; }
   }
 </style>

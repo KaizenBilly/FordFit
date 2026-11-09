@@ -19,6 +19,8 @@ const venues = [
     text: 'Train in a modern, welcoming environment at <strong>South Norfolk Leisure Centre</strong>, right in the heart of Long Stratton. This fully equipped facility offers everything you need for strength, cardio, and functional training — with FordFit sessions designed to make every visit count.',
     map: MAP + '0x47d9e9a6f48dbdfd%3A0xa664bd634d1b9255!2sFordFit%20Personal%20Training!5e0!3m2!1sen!2suk!4v1762946116541!5m2!1sen!2suk',
     href: '/personal-training-South-Norfolk-Leisure-Center',
+    mapsLink: 'https://maps.google.com/?cid=11989916342160167509',
+    readMore: 'Personal training in Long Stratton',
   },
   {
     label: 'WYMONDHAM',
@@ -27,10 +29,12 @@ const venues = [
     text: 'Prefer a high-energy, focused training space? FordFit also runs sessions from <strong>New Revolution Health &amp; Fitness Club</strong> in Wymondham — a 24/7 gym with everything from heavy lifting zones to cardio and functional areas.',
     map: MAP + '0x47d9dda0d24cce89%3A0xe10a6c21f2e44bf5!2sFordFit%20Personal%20Training!5e0!3m2!1sen!2suk!4v1762946146227!5m2!1sen!2suk',
     href: '/Personal-Training-New-Revolution-Wymondham',
+    mapsLink: 'https://maps.google.com/?cid=16215892301365660661',
+    readMore: 'Personal training in Wymondham',
   },
 ];
 ---
-<Base service="inPerson"
+<Base breadcrumbs={[{ name: 'In-Person Coaching', href: '/in-person-coaching' }]} service="inPerson"
   title="In-Person Personal Training | FordFit 1-to-1 Coaching"
   description="Train in person with FordFit. Tailored 1-to-1 coaching, expert guidance and structured sessions designed to help you get fitter and more confident."
 >
@@ -73,8 +77,16 @@ const venues = [
             <h3 class="venue-label">{v.label}</h3>
             <img class="venue-card-logo" src={v.logo} alt={v.logoAlt} width="300" height="120" loading="lazy" />
             <p class="venue-card-text" set:html={v.text} />
-            <iframe class="venue-map" src={v.map} title={`Map: FordFit Personal Training, ${v.label.toLowerCase()}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-            <a class="btn btn-read" href={v.href}>READ MORE</a>
+            {/* Click-to-load: Google Maps sets cookies, so nothing loads from Google until asked */}
+            <div class="venue-map" data-map={v.map} data-title={`Map: FordFit Personal Training, ${v.label.toLowerCase()}`}>
+              <div class="map-gate">
+                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+                <button type="button" class="map-load">Load map</button>
+                <p>Loads Google Maps, which sets cookies.</p>
+                <a href={v.mapsLink} target="_blank" rel="noopener">Open in Google Maps<span class="sr-only"> (opens in a new tab)</span></a>
+              </div>
+            </div>
+            <a class="btn btn-read" href={v.href}>READ MORE<span class="sr-only">: {v.readMore}</span></a>
           </article>
         ))}
       </div>
@@ -135,7 +147,13 @@ const venues = [
   .venue-label { font-family: var(--open-sans); font-size: 18px; font-weight: 400; letter-spacing: 2px; }
   .venue-card-logo { width: auto; max-width: 300px; height: 90px; object-fit: contain; margin: 16px 0; }
   .venue-card-text { font-family: var(--poppins); font-size: 16px; line-height: 1.3; max-width: 460px; flex: 1; }
-  .venue-map { width: 100%; max-width: 400px; height: 300px; border: 0; margin: 28px 0 34px; }
+  .venue-map { width: 100%; max-width: 400px; height: 300px; margin: 28px 0 34px; border-radius: 12px; overflow: hidden; background: #e9ebee; }
+  .venue-map :global(iframe) { width: 100%; height: 100%; border: 0; display: block; }
+  .map-gate { height: 100%; display: grid; place-content: center; justify-items: center; gap: 10px; padding: 20px; color: var(--slate); font-family: var(--poppins); }
+  .map-gate p { font-size: 13px; }
+  .map-gate a { font-size: 14px; color: var(--black); text-underline-offset: 3px; }
+  .map-load { background: var(--black); color: var(--white); font-weight: 600; font-size: 15px; padding: 11px 22px; border-radius: 8px; }
+  .map-load:hover { opacity: .85; }
   .btn-read { background: var(--black); color: var(--white); border: 2px solid var(--white); border-radius: 15px; font-size: 20px; font-weight: 600; padding: 15px 20px; width: 266px; max-width: 100%; }
 
   .group { background: var(--white); padding: 40px 0; }
@@ -191,4 +209,18 @@ const venues = [
       }, 1000);
     }
   }
+</script>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-map]').forEach((box) => {
+    box.querySelector('.map-load')?.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = box.dataset.map!;
+      f.title = box.dataset.title!;
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      f.allowFullscreen = true;
+      box.replaceChildren(f);
+      f.focus();
+    });
+  });
 </script>

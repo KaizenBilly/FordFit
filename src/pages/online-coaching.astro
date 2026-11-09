@@ -26,7 +26,7 @@ const storyImages = [
   '/assets/img/online-story-3.webp', '/assets/img/about-5.webp', '/assets/img/about-6.webp',
 ];
 ---
-<Base service="online"
+<Base breadcrumbs={[{ name: 'Online Coaching', href: '/online-coaching' }]} service="online"
   title="Online Coaching | FordFit App Training & Personalised Plans"
   description="Train anywhere with FordFit Online Coaching. Get custom workouts, nutrition support & weekly check-ins through the FordFit App to see real progress."
 >
@@ -51,29 +51,34 @@ const storyImages = [
       <p class="oc-plans-intro">Train on your own schedule with <strong>FordFit Online Coaching</strong>. Through the FordFit App, you’ll get personalised workout plans, progress tracking, and ongoing support directly from Toby — no matter where you are. From structured home workouts to gym-based training plans, online coaching gives you the flexibility to stay consistent, accountable, and see lasting results.</p>
 
       <div class="compare" role="table" aria-label="Online coaching packages">
-        <div class="cmp-head cmp-features" role="columnheader"><h3>Features</h3><p>Compare our plans</p></div>
-        {plans.map((p) => (
-          <div class="cmp-head" role="columnheader" style={`grid-column:${p.col + 1}`}>
-            {p.popular && <span class="ribbon">Most Popular</span>}
-            <h3>{p.name}</h3>
-            <p><em>{p.caption}</em></p>
-          </div>
-        ))}
+        {/* role="row" wrappers use display:contents so the cells stay on the parent grid */}
+        <div class="cmp-row" role="row">
+          <div class="cmp-head cmp-features" role="columnheader"><h3>Features</h3><p>Compare our plans</p></div>
+          {plans.map((p) => (
+            <div class="cmp-head" role="columnheader" style={`grid-column:${p.col + 1}`}>
+              {p.popular && <span class="ribbon">Most Popular</span>}
+              <h3>{p.name}</h3>
+              <p><em>{p.caption}</em></p>
+            </div>
+          ))}
+        </div>
         {rows.map(([feature, basic, elite]) => (
-          <>
+          <div class="cmp-row" role="row">
             <div class="cmp-feature" role="rowheader"><strong>{feature}</strong></div>
             <div class="cmp-cell" role="cell">{basic || '—'}</div>
             <div class="cmp-cell" role="cell">{elite}</div>
-          </>
-        ))}
-        <div class="cmp-feature cmp-empty"></div>
-        {plans.map((p) => (
-          <div class="cmp-foot" style={`grid-column:${p.col + 1}`}>
-            <p class="cmp-price">{p.price} <span>/ month</span></p>
-            {p.fee && <p class="cmp-fee">{p.fee}</p>}
-            <a class="cmp-btn" href={START_URL}>{p.cta}</a>
           </div>
         ))}
+        <div class="cmp-row" role="row">
+          <div class="cmp-feature cmp-empty" role="rowheader"><span class="sr-only">Price</span></div>
+          {plans.map((p) => (
+            <div class="cmp-foot" role="cell" style={`grid-column:${p.col + 1}`}>
+              <p class="cmp-price">{p.price} <span>/ month</span></p>
+              {p.fee && <p class="cmp-fee">{p.fee}</p>}
+              <a class="cmp-btn" href={START_URL}>{p.cta}<span class="sr-only">: {p.name}</span></a>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div class="plan-cards">
@@ -140,8 +145,8 @@ const storyImages = [
     display: grid; grid-template-columns: repeat(3, 1fr); max-width: 1110px; margin: 40px auto 0; background: var(--white);
     border: 1px solid #e4e4e4; font-family: var(--poppins); text-align: center;
   }
-  .compare > * { border-bottom: 1px solid #e4e4e4; padding: 16px 14px; display: flex; flex-direction: column; justify-content: center; }
-  .compare > :not(:nth-child(3n + 1)) { border-left: 1px solid #e4e4e4; }
+  .cmp-row > * { border-bottom: 1px solid #e4e4e4; padding: 16px 14px; display: flex; flex-direction: column; justify-content: center; }
+  .cmp-row > :not(:first-child) { border-left: 1px solid #e4e4e4; }
   .cmp-head { position: relative; overflow: hidden; min-height: 130px; }
   .cmp-head h3 { font-size: 24px; font-weight: 600; color: #111827; }
   .cmp-head p { font-size: 14px; line-height: 1.4; color: #6b7280; margin-top: 8px; }
@@ -150,11 +155,12 @@ const storyImages = [
   .cmp-feature { background: #f8fafc; font-size: 14px; min-height: 73px; }
   .cmp-cell { font-size: 14px; line-height: 1.2; color: #000; min-height: 73px; }
   .plan-cards { display: none; }
+  .cmp-row { display: contents; }
   .cmp-empty { background: #f8fafc; border-bottom: 0 !important; }
   .cmp-foot { border-bottom: 0 !important; padding: 24px 14px; }
   .cmp-price { font-size: 40px; font-weight: 700; line-height: 1.2; color: #111827; }
   .cmp-price span { font-size: 13px; font-weight: 400; }
-  .cmp-fee { font-size: 14px; font-weight: 600; color: #757bbd; margin-top: 4px; }
+  .cmp-fee { font-size: 14px; font-weight: 600; color: #4f55a0; margin-top: 4px; }
   .cmp-btn { display: block; margin-top: 20px; background: var(--black); color: var(--white); border-radius: 4px; padding: 11px 16px; font-size: 16px; font-weight: 700; text-decoration: none; }
   .cmp-btn:hover { opacity: .85; }
   .ribbon {

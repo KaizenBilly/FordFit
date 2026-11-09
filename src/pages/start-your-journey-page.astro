@@ -5,9 +5,9 @@ import Reviews from '../components/Reviews.astro';
 
 const strip = Array.from({ length: 13 }, (_, i) => `/assets/img/strip-${i + 1}.webp`);
 ---
-<Base
+<Base breadcrumbs={[{ name: 'Start Your Journey', href: '/start-your-journey-page' }]}
   title="Start Your Journey | FordFit Personal Training"
-  description="Tell Toby what you’re looking for and he’ll be in touch to book your consultation and plan your training."
+  description="Start your FordFit journey: tell Toby your goals and he’ll call to book a free consultation for personal training in Long Stratton, Wymondham, at home or online."
 >
   <section class="sj">
     <div class="container">
@@ -19,7 +19,7 @@ const strip = Array.from({ length: 13 }, (_, i) => `/assets/img/strip-${i + 1}.w
         <div class="sj-reviews"><Reviews variant="single" /></div>
       </div>
 
-      <div class="strip" aria-label="Toby coaching FordFit clients">
+      <div class="strip" role="group" aria-label="Toby coaching FordFit clients">
         <div class="strip-track">
           {[...strip, ...strip].map((src, i) => (
             <div class="strip-item"><img src={src} alt="" width="720" height="900" loading="lazy" aria-hidden={i >= strip.length ? 'true' : undefined} /></div>
