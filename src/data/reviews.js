@@ -2,8 +2,11 @@
 // text; GHL never showed star-only reviews). Newest first.
 // To add a new review, add an entry at the top and bump REVIEW_COUNT.
 
-// Both Google listings combined: Long Stratton (56) + Wymondham (43), 14 Oct 2026.
-export const REVIEW_COUNT = 99;
+// Both Google listings combined (Long Stratton + Wymondham). 99 on 14 Oct 2026; over 100 by
+// 9 Nov 2026. REVIEW_COUNT feeds the review stars in Google results, so it must be a whole number
+// no higher than the real total; REVIEW_LABEL is what visitors see.
+export const REVIEW_COUNT = 100;
+export const REVIEW_LABEL = '100+';
 export const RATING = '5.00';
 // Toby's Long Stratton Google listing (41 Swan Ln). Opens the listing, where visitors tap
 // "Write a review"; the direct writereview link can loop on Google sign-in.

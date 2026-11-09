@@ -4,7 +4,7 @@
 //   variant="carousel"  most pages: header, AI summary bullets, 3 cards a page with page numbers
 //   variant="masonry"   About page: "Read what my clients think...", 4 columns, Load More
 //   variant="single"    Start Your Journey: rating, AI summary, one card a page
-import { REVIEWS, REVIEW_COUNT, RATING, GOOGLE_REVIEWS_URL } from '../data/reviews.js';
+import { REVIEWS, REVIEW_LABEL, RATING, GOOGLE_REVIEWS_URL } from '../data/reviews.js';
 
 const { variant = 'carousel' } = Astro.props;
 const PER_PAGE = { carousel: 3, single: 1, masonry: 12 }[variant];
@@ -43,7 +43,7 @@ const stars = Array.from({ length: 5 });
       <div class="rv-score">
         <div class="rv-score-inner">
           <p class="rv-rating">{RATING}</p>
-          <p class="rv-meta"><span class="rv-stars" aria-label="5 out of 5 stars">{stars.map(() => <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z" /></svg>)}</span><span class="rv-divider"></span><span class="rv-count">{REVIEW_COUNT} reviews</span></p>
+          <p class="rv-meta"><span class="rv-stars" aria-label="5 out of 5 stars">{stars.map(() => <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z" /></svg>)}</span><span class="rv-divider"></span><span class="rv-count">{REVIEW_LABEL} reviews</span></p>
         </div>
         <a class="rv-write" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener">Write a review</a>
       </div>
@@ -51,7 +51,7 @@ const stars = Array.from({ length: 5 });
   ) : (
     <div class="rv-score rv-score-centre">
       <p class="rv-rating">{RATING}</p>
-      <p class="rv-meta"><span class="rv-stars" aria-label="5 out of 5 stars">{stars.map(() => <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z" /></svg>)}</span><span class="rv-divider"></span><span class="rv-count">{REVIEW_COUNT} reviews</span></p>
+      <p class="rv-meta"><span class="rv-stars" aria-label="5 out of 5 stars">{stars.map(() => <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z" /></svg>)}</span><span class="rv-divider"></span><span class="rv-count">{REVIEW_LABEL} reviews</span></p>
     </div>
   )}
 

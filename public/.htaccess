@@ -13,6 +13,20 @@ RewriteRule ^ https://fordfitpt.com%{REQUEST_URI} [L,R=301]
 # GHL served the home page at /home and /index too
 RewriteRule ^(home|index|index\.html)$ / [L,R=301]
 
+# Old Wix / GHL addresses still in Google and on social profiles
+RewriteRule ^service-page/online-coaching/?$ /online-coaching [L,R=301,NC]
+RewriteRule ^service-page/.*$ /in-person-coaching [L,R=301,NC]
+RewriteRule ^(about|about-us)/?$ /about-me [L,R=301,NC]
+RewriteRule ^(contact|contact-us|book-online|booking|book|consultation|start-your-journey)/?$ /start-your-journey-page [L,R=301,NC]
+RewriteRule ^(services|personal-training|pricing|plans-pricing)/?$ /in-person-coaching [L,R=301,NC]
+RewriteRule ^(reviews|testimonials)/?$ /about-me [L,R=301,NC]
+
+# The two mixed-case addresses: send any other casing to the real one
+RewriteCond %{REQUEST_URI} !^/personal-training-South-Norfolk-Leisure-Center$
+RewriteRule ^personal-training-south-norfolk-leisure-cent(er|re)/?$ /personal-training-South-Norfolk-Leisure-Center [L,R=301,NC]
+RewriteCond %{REQUEST_URI} !^/Personal-Training-New-Revolution-Wymondham$
+RewriteRule ^personal-training-new-revolution-wymondham/?$ /Personal-Training-New-Revolution-Wymondham [L,R=301,NC]
+
 # Old /page.html requests -> /page
 RewriteCond %{THE_REQUEST} \s/([^\s?]+)\.html[\s?] [NC]
 RewriteRule ^ /%1 [L,R=301]
