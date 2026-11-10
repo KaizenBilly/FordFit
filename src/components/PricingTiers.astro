@@ -1,14 +1,14 @@
 ---
-// Bronze / Silver monthly packages plus the pay-as-you-go single session. On phones the cards
-// become a swipeable row. (Gold, 12 sessions a month, was dropped in Nov 2026.)
+// Bronze (pay as you go), Silver (4 a month, most popular) and Gold (8 a month). On phones the
+// cards become a swipeable row. Renamed 10 Nov 2026; the old 12-a-month Gold was dropped 9 Nov.
 import { START_URL } from '../site.js';
 const { accent, ribbonText = '#000', intro } = Astro.props;
 
 const common = ['Ongoing performance feedback', 'Tailored monthly plan updates', 'Personalised nutrition targets', 'App + Nutrition tracking dashboard'];
 const tiers = [
-  { name: 'Bronze Package', caption: 'Steady, consistent progress with ongoing accountability.', features: ['4× sessions per month', ...common], price: '£160', per: '/ month', cta: 'Select Bronze Package' },
-  { name: 'Silver Package', caption: 'Build momentum and results with consistent support.', features: ['8× sessions per month', ...common], price: '£280', per: '/ month', cta: 'Choose Silver', popular: true },
-  { name: 'Single PT Session', caption: 'Perfect for trying out FordFit or topping up your training.', features: ['1× 60-minute session', 'Expert technique advice', 'Intro session assessment'], price: '£45', per: '/ hour', cta: 'Book A Session' },
+  { name: 'Bronze Package', caption: 'Pay as you go. Perfect for trying out FordFit or topping up your training.', features: ['1× 60-minute session', 'Expert technique advice', 'Intro session assessment'], price: '£45', per: '/ session', cta: 'Book Bronze' },
+  { name: 'Silver Package', caption: 'Steady, consistent progress with ongoing accountability.', features: ['4× sessions per month', ...common], price: '£160', per: '/ month', cta: 'Choose Silver', popular: true },
+  { name: 'Gold Package', caption: 'Maximum results with full accountability and expert guidance.', features: ['8× sessions per month', ...common], price: '£280', per: '/ month', cta: 'Go Gold' },
 ];
 ---
 <section class="tiers-section" style={`--accent:${accent};--ribbon-text:${ribbonText}`}>
