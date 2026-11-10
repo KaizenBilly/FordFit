@@ -1,0 +1,77 @@
+# Hostinger (LiteSpeed/Apache) rules for the static FordFit site.
+Options -MultiViews -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+
+# HTTPS, and www -> fordfitpt.com (the canonical address)
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://fordfitpt.com%{REQUEST_URI} [L,R=301]
+
+# GHL served the home page at /home and /index too
+RewriteRule ^(home|index|index\.html)$ / [L,R=301]
+
+# Old Wix / GHL addresses still in Google and on social profiles
+RewriteRule ^service-page/online-coaching/?$ /online-coaching [L,R=301,NC]
+RewriteRule ^service-page/.*$ /in-person-coaching [L,R=301,NC]
+RewriteRule ^(about|about-us)/?$ /about-me [L,R=301,NC]
+RewriteRule ^(contact|contact-us|book-online|booking|book|consultation|start-your-journey)/?$ /start-your-journey-page [L,R=301,NC]
+RewriteRule ^(services|personal-training|pricing|plans-pricing)/?$ /in-person-coaching [L,R=301,NC]
+RewriteRule ^(reviews|testimonials)/?$ /about-me [L,R=301,NC]
+
+# The two mixed-case addresses: send any other casing to the real one
+RewriteCond %{REQUEST_URI} !^/personal-training-South-Norfolk-Leisure-Center$
+RewriteRule ^personal-training-south-norfolk-leisure-cent(er|re)/?$ /personal-training-South-Norfolk-Leisure-Center [L,R=301,NC]
+RewriteCond %{REQUEST_URI} !^/Personal-Training-New-Revolution-Wymondham$
+RewriteRule ^personal-training-new-revolution-wymondham/?$ /Personal-Training-New-Revolution-Wymondham [L,R=301,NC]
+
+# Old /page.html requests -> /page
+RewriteCond %{THE_REQUEST} \s/([^\s?]+)\.html[\s?] [NC]
+RewriteRule ^ /%1 [L,R=301]
+
+# Drop trailing slashes (GHL URLs have none)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [L,R=301]
+
+# Serve /about-me from about-me.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# ---- Dead links: send any old page address to the closest page, else the home page ----
+# Real files, folders, pages and the 404 itself are served as normal. Missing assets
+# (anything with a file extension, or under /assets, /_astro, /api) still get a real 404,
+# so a broken image or script is never answered with an HTML page.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME}.html -f [OR]
+RewriteCond %{REQUEST_URI} ^/(assets|_astro|api|\.well-known)/ [NC,OR]
+RewriteCond %{REQUEST_URI} \.[a-z0-9]{2,5}$ [NC]
+RewriteRule ^ - [L]
+
+# Closest match by keyword (first match wins, so the more specific ones come first)
+RewriteRule (wymondham|new-?revolution|nr-?fitness) /Personal-Training-New-Revolution-Wymondham [L,R=301,NC]
+RewriteRule (stratton|leisure|south-?norfolk) /personal-training-South-Norfolk-Leisure-Center [L,R=301,NC]
+RewriteRule (home-?and-?mobile|mobile|at-?home|home-?pt|in-?home) /personal-training-home-and-mobile [L,R=301,NC]
+RewriteRule (online|remote|virtual|(^|[-_/])app([-_/]|$)|trial|kahunas) /online-coaching [L,R=301,NC]
+RewriteRule (privacy|gdpr|cookie) /privacy-policy [L,R=301,NC]
+RewriteRule (contact|book|journey|consult|enquir|get-?started|sign-?up|join|apply|calendar) /start-your-journey-page [L,R=301,NC]
+RewriteRule (about|toby|story|review|testimonial|transformation|result) /about-me [L,R=301,NC]
+RewriteRule (in-?person|personal-?training|1-?(2|to)-?1|one-?to-?one|price|pricing|plan|package|service|session|coaching|gym|group|(^|[-_/])pt([-_/]|$)) /in-person-coaching [L,R=301,NC]
+
+# Anything else (old blog posts, thank-you pages, Wix/GHL leftovers) goes to the home page
+RewriteRule ^ / [L,R=301]
+
+<IfModule mod_headers.c>
+  # Astro's hashed bundles and the media never change under the same name
+  <FilesMatch "\.(css|js|webp|png|jpg|svg|mp4|woff2)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
